@@ -4,13 +4,13 @@ let areas = {
   c: null,
 };
 
-document.querySelectorAll(".item").forEach((item) => {
+document.querySelectorAll(".item").forEach(item => {
   item.addEventListener("dragstart", dragStart);
   item.addEventListener("dragend", dragEnd);
 });
 
-document.querySelectorAll(".area").forEach((area) => {
-  area.addEventListener("draover", dragOver);
+document.querySelectorAll(".area").forEach(area => {
+  area.addEventListener("dragover", dragOver);
   area.addEventListener("dragleave", dragLeave);
   area.addEventListener("drop", drop);
 });
@@ -49,6 +49,8 @@ function drop(e) {
   if (e.currentTarget.querySelector(".item") === null) {
     e.currentTarget.appendChild(dragItem);
   }
+
+  updateAreas();
 }
 
 //Function neutral area
@@ -63,14 +65,16 @@ function dropNeutral(e) {
   e.currentTarget.classList.remove("hover");
   let dragItem = document.querySelector(".item.dragging");
   e.currentTarget.appendChild(dragItem);
+
+  updateAreas();
 }
 
 // Logic funcitions
 function updateAreas() {
-  document.querySelectorAll(".area").forEach((area) => {
+  document.querySelectorAll(".area").forEach(area => {
     let name = area.getAttribute("data-name");
 
-    if (area.querySelectorAll(".item") !== null) {
+    if (area.querySelector(".item") !== null) {
       areas[name] = area.querySelector(".item").innerHTML;
     } else {
       areas[name] = null;
@@ -82,4 +86,5 @@ function updateAreas() {
   } else {
     document.querySelector(".areas").classList.remove("correct");
   }
+
 }
